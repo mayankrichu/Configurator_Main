@@ -64,3 +64,5 @@ deploy:
     - git pull
     - git push github master
 
+variables:
+    GITHUB_TOKEN: $Configuration_Token
