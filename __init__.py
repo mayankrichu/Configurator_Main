@@ -1,6 +1,6 @@
 from flask import Flask
-from Mayank.Configurator_Homepage.routes import configurator_homepage
-from Mayank.Configurator.routes import configurator
+from Configurator_Homepage.routes import configurator_homepage
+from Configurator.routes import configurator
 
 def create_app():
     app = Flask(__name__)

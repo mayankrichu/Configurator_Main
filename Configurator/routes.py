@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from Mayank.Configurator.utils import get_skills
+from Configurator.utils import get_skills
 
 configurator = Blueprint('configurator', __name__)
 
