@@ -1,6 +1,7 @@
 from __init__ import create_app
 
 #importing app from __init__.py
+#added one more comment
 app = create_app()
 
 if __name__ == '__main__':
