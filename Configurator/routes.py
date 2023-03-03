@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for
 from Configurator.utils import get_skills
 
 configurator = Blueprint('configurator', __name__)
@@ -12,3 +12,9 @@ def Configurator():
     task_dependent_skills = get_skills(dependent_skill_file_path)
     return render_template('Configurator.html', task_independent_skills=task_independent_skills, task_dependent_skills = task_dependent_skills )
 
+@configurator.route('/configurator_submit' ,methods=['POST'])
+def Configurator_Submit():
+
+    selected_configuration = request.form.get('values').split(',')
+    print(selected_configuration)
+    return render_template('Configurator.html')

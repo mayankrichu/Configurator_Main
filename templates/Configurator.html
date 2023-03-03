@@ -42,45 +42,56 @@
 	</style>
 </head>
 <body>
+<form action="/configurator_submit" method ="POST" >
 	<div class="container">
 		<h3>Task independent skills</h3>
 		{% for task_independent_skill in task_independent_skills %}
-    <button type="button" class="btn btn-outline-primary" >{{ task_independent_skill }}</button>
+    <button type="button" class="btn btn-outline-primary" data-value ="{{ task_independent_skill }}">{{ task_independent_skill }}</button>
   		{% endfor %}
 
 	</div>
 
-	<div class="container">
+	<input type="hidden" id="values" name="values" value="">
+
+	<div class="container" >
 		<h3>Task dependent skills</h3>
 		{% for task_dependent_skill in task_dependent_skills %}
-    <button type="button" class="btn btn-outline-info" >{{ task_dependent_skill }}</button>
+    <button type="button" class="btn btn-outline-info" data-value ="{{ task_dependent_skill }}">{{ task_dependent_skill }}</button>
   		{% endfor %}
 	</div>
 
 
 
-	<div class="container_target">
+	<div class="container_target" name ="container_target" id="container_target">
 		<h3>Task Planning Area</h3>
 	</div>
 
 	<div class="container_finish" >
-	<button type="button" class="btn btn-outline-primary" > Finish </button>
+	<input type="submit" id="submit" class="btn btn-outline-primary"/>
 	<button type="button" class="btn btn-outline-primary" > Reset </button>
 		</div>
+</form>
 
-	<script>
+<script>
 		const buttons = document.querySelectorAll('.container button');
 		const sourceContainer = document.querySelector('.container');
 		const targetContainer = document.querySelector('.container_target');
 
+
 		for (let i = 0; i < buttons.length; i++) {
 			const button = buttons[i];
-
+			const value = button.getAttribute('data-value');
 			button.addEventListener('click', () => {
-			const newButton = button.cloneNode(true); // create a copy of the button element
-			targetContainer.appendChild(newButton);
+    		const newButton = button.cloneNode(true);
+    		newButton.setAttribute('data-value', value);
+    		targetContainer.appendChild(newButton);
+    		const hiddenField = document.querySelector('#values');
+    		hiddenField.value += value + ',';
+
 			});
 		}
+
 	</script>
+
 </body>
 </html>
