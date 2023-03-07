@@ -8,30 +8,39 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 	<style>
+		.float-container {
+    	border: 3px solid #fff;
+    	padding: 20px;
+		}
 		.container {
 			border: 1px solid black;
-			padding: 15px;
-			margin: 15px;
-			display: inline-block;
-			vertical-align: top;
+			width: 50%;
+    		float: left;
+    		padding: 20px;
+
 		}
 
 		.container_target {
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px;
+  position: absolute;
+  top: 30%;
+  left: 20%;
 
-			border: 1px solid black;
-			padding: 10px;
-			margin: 10px;
-			display: inline-block;
-			vertical-align: top;
-		}
-
+  width: 50%;
+}
 
 		.container_finish {
 
-			padding: 5px;
-			margin: 5px;
-			display: inline-block;
-			vertical-align:top ;
+
+  padding: 10px;
+  margin: 10px;
+  position: relative;
+  top: 60%;
+  left: 50%;
+  transform: translate(60%, 80%);
+  width: 50%;
 		}
 
 
@@ -43,32 +52,35 @@
 </head>
 <body>
 <form action="/configurator_submit" method ="POST" >
+	<div class="float-container">
 	<div class="container">
-		<h3>Task independent skills</h3>
+		<h3 align="center">Task independent skills</h3>
 		{% for task_independent_skill in task_independent_skills %}
     <button type="button" class="btn btn-outline-primary" data-value ="{{ task_independent_skill }}">{{ task_independent_skill }}</button>
   		{% endfor %}
 
 	</div>
 
+
 	<input type="hidden" id="values" name="values" value="">
 
-	<div class="container" >
-		<h3>Task dependent skills</h3>
+	<div class="container"  >
+		<h3 align="center">Task dependent skills</h3>
 		{% for task_dependent_skill in task_dependent_skills %}
     <button type="button" class="btn btn-outline-info" data-value ="{{ task_dependent_skill }}">{{ task_dependent_skill }}</button>
   		{% endfor %}
+	</div>
 	</div>
 
 
 
 	<div class="container_target" name ="container_target" id="container_target">
-		<h3>Task Planning Area</h3>
+		<h3 align="center">Task Planning Area</h3>
 	</div>
 
-	<div class="container_finish" >
+	<div class="container_finish">
 	<input type="submit" id="submit" class="btn btn-outline-primary"/>
-	<button type="button" class="btn btn-outline-primary" > Reset </button>
+	<button type="button" class="btn btn-outline-primary"	> Reset </button>
 		</div>
 </form>
 
