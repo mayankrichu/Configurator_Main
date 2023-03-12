@@ -105,5 +105,24 @@
 
 	</script>
 
+<script>
+	$(document).ready(function() {
+  $(document).on('click', '#container_target button', function() {
+    $(this).remove();
+  });
+});
+</script>
+
+<script>
+	$(document).ready(function() {
+  $(document).on('click', '#container_target button', function() {
+    const valueToRemove = $(this).attr('data-value');
+    $(this).remove();
+    const hiddenField = document.querySelector('#values');
+    hiddenField.value = hiddenField.value.replace(valueToRemove + ',', '');
+  });
+});
+</script>
+
 </body>
 </html>
