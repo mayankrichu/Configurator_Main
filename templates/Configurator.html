@@ -47,6 +47,7 @@
 		button {
 			padding: 5px 10px;
 			margin: 5px;
+			cursor: grab;
 		}
 	</style>
 </head>
@@ -56,7 +57,7 @@
 	<div class="container">
 		<h3 align="center">Task independent skills</h3>
 		{% for task_independent_skill in task_independent_skills %}
-    <button type="button" class="btn btn-outline-primary" data-value ="{{ task_independent_skill }}">{{ task_independent_skill }}</button>
+    <button type="button" class="btn btn-outline-primary" data-value ="{{ task_independent_skill }}" draggable="true">{{ task_independent_skill }}</button>
   		{% endfor %}
 
 	</div>
@@ -67,7 +68,7 @@
 	<div class="container"  >
 		<h3 align="center">Task dependent skills</h3>
 		{% for task_dependent_skill in task_dependent_skills %}
-    <button type="button" class="btn btn-outline-info" data-value ="{{ task_dependent_skill }}">{{ task_dependent_skill }}</button>
+    <button type="button" class="btn btn-outline-info" data-value ="{{ task_dependent_skill }}" draggable="true">{{ task_dependent_skill }}</button>
   		{% endfor %}
 	</div>
 	</div>
@@ -85,23 +86,48 @@
 </form>
 
 <script>
-		const buttons = document.querySelectorAll('.container button');
-		const sourceContainer = document.querySelector('.container');
-		const targetContainer = document.querySelector('.container_target');
+const buttons = document.querySelectorAll('.container button');
+const sourceContainer = document.querySelector('.container');
+const targetContainer = document.querySelector('.container_target');
 
+for (let i = 0; i < buttons.length; i++) {
+  const button = buttons[i];
+  const value = button.getAttribute('data-value');
+  const buttonClass = button.getAttribute('class');
+  button.addEventListener('dragstart', (event) => {
+    event.dataTransfer.setData('text/plain', value);
+    event.dataTransfer.setData('text/plain-class', buttonClass);
+  });
+}
 
-		for (let i = 0; i < buttons.length; i++) {
-			const button = buttons[i];
-			const value = button.getAttribute('data-value');
-			button.addEventListener('click', () => {
-    		const newButton = button.cloneNode(true);
-    		newButton.setAttribute('data-value', value);
-    		targetContainer.appendChild(newButton);
-    		const hiddenField = document.querySelector('#values');
-    		hiddenField.value += value + ',';
+targetContainer.addEventListener('dragover', (event) => {
+  event.preventDefault();
+});
 
-			});
-		}
+targetContainer.addEventListener('drop', (event) => {
+  event.preventDefault();
+  const value = event.dataTransfer.getData('text');
+  const buttonClass = event.dataTransfer.getData('text/plain-class');
+  const newButton = document.createElement('button');
+  newButton.setAttribute('type', 'button');
+  newButton.setAttribute('class', buttonClass);
+  newButton.setAttribute('data-value', value);
+  newButton.textContent = value;
+  targetContainer.appendChild(newButton);
+  const hiddenField = document.querySelector('#values');
+  hiddenField.value += value + ',';
+});
+
+targetContainer.addEventListener('dragend', () => {
+  const hiddenField = document.querySelector('#values');
+  const buttons = targetContainer.querySelectorAll('button');
+  hiddenField.value = '';
+  for (let i = 0; i < buttons.length; i++) {
+    const button = buttons[i];
+    hiddenField.value += button.getAttribute('data-value') + ',';
+  }
+});
+
 
 	</script>
 
@@ -123,6 +149,8 @@
   });
 });
 </script>
+
+
 
 </body>
 </html>
